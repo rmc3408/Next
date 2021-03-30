@@ -21,35 +21,40 @@ const unit = ({ user }) => {
  * However, you cannot add users, posts, dynamically
  * because it saved during build time
  */
-// export const getStaticProps = async (context) => {
-//   const result = await fetch(
-//     `https://jsonplaceholder.typicode.com/users/${context.params.id}`
-//   );
-//   const user = await result.json();
-//   return { props: { user } };
-// };
-// export const getStaticPaths = async () => {
-//   const result = await fetch(`https://jsonplaceholder.typicode.com/users`);
-//   const users = await result.json();
+export const getStaticProps = async (context) => {
+  const result = await fetch(
+    `https://jsonplaceholder.typicode.com/users/${context.params.id}`
+  );
+  const user = await result.json();
+  return { props: { user } };
+};
 
-//   const ids = users.map((user) => user.id);
-//   const paths = ids.map((i) => ({ params: { id: i.toString() } }));
+export const getStaticPaths = async () => {
+  const result = await fetch(`https://jsonplaceholder.typicode.com/users`);
+  const users = await result.json();
 
-//   return {
-//     paths,
-//     fallback: false,
-//   };
-//   //return { path: { id: '1', id: '2' }} //must get a array of all id is this format
-// };
+  const paths = users.map((user) => ({
+    params: { id: user.id.toString() },
+  }));
+  //console.log(paths);
+  // const ids = users.map((user) => user.id);
+  // const paths = ids.map((i) => ({ params: { id: i.toString() } }));
+
+  return {
+    paths,
+    fallback: false,
+  };
+  //return { path: { id: '1', id: '2' }} //must get a array of all id is this format
+};
 
 /**
  * Everytime enter in the user ID , fetch the user information
  */
-export const getServerSideProps = async (context) => {
-  const result = await fetch(`https://jsonplaceholder.typicode.com/users/${context.params.id}`)
-  const user = await result.json();
+// export const getServerSideProps = async (context) => {
+//   const result = await fetch(`https://jsonplaceholder.typicode.com/users/${context.params.id}`)
+//   const user = await result.json();
     
-  return { props: { user }}
-}
+//   return { props: { user }}
+// }
 
 export default unit;
