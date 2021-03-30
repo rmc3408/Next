@@ -4,8 +4,8 @@ import articleStyles from '../styles/Article.module.css'
 const ArticleList = ({ articles }) => {
   return (
     <div className={articleStyles.grid}>
-      {articles.map((article) => (
-        <ArticleItem key={article} article={article} />
+      {articles.map((article,idx) => (
+        <ArticleItem key={idx} article={article} />
       ))}
     </div>
   )
